@@ -5,20 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/09 16:15:43 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/09 16:15:43 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/12 01:41:43 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/12 01:43:50 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-#include <stdlib.h>
+#include "libft.h"
 
 typedef struct s_list
 {
 	int				number;
 	struct s_list	*next;
 }	t_list;
+
+void	sa(t_list **stack_a);
+void	sb(t_list **stack_b);
+void	ss(t_list **stack_a, t_list **stack_b);
+void	pa(t_list **stack_a, t_list **stack_b);
+void	pb(t_list **stack_a, t_list **stack_b);
+void	ra(t_list **stack_a);
+void	rb(t_list **stack_b);
+void	rr(t_list **stack_a, t_list **stack_b);
+void	rra(t_list **stack_a);
+void	rrb(t_list **stack_b);
+void	rrr(t_list **stack_a, t_list **stack_b);
 
 #endif
