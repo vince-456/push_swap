@@ -5,15 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/12 01:41:43 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/12 01:43:50 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/12 13:57:31 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/12 13:57:35 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-#include "libft.h"
+# include "libft/libft.h"
 
 typedef struct s_list
 {
