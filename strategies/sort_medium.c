@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/12 22:09:21 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/12 22:41:16 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/13 12:48:01 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/13 17:24:59 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,40 @@ void	sort_index(t_list **stack_a)
 
 void	sort_medium(t_list **stack_a, t_list **stack_b)
 {
-	int				num_chunks;
-	int				chunk_size;
+	unsigned int	num_chunks;
+	unsigned int	chunk_size;
 	unsigned int	lstsize;
+	unsigned int	min_index;
+	unsigned int	max_index;
+
 
 	lstsize = ft_lstsize(*stack_a);
 	num_chunks = sqrt(lstsize);
 	chunk_size = lstsize / num_chunks;
 	sort_index(stack_a);
+	min_index = 0;
+	max_index = chunk_size;
+	while (*stack_a != NULL)
+	{
+		if ((*stack_a)->index <= max_index)
+		{
+			pb(stack_a, stack_b);
+			min_index++;
+		}
+		else
+			ra(stack_a);
+		if (min_index == max_index)
+			max_index = max_index + chunk_size;
+	}
+	max_index = lstsize - 1;
+	while (*stack_b != NULL)
+	{
+		if ((*stack_b)->index == max_index)
+		{
+			pa(stack_a, stack_b);
+			max_index--;
+		}
+		else
+			rb(stack_b);
+	}
 }
