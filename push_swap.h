@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/12 13:57:31 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/12 13:57:35 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/12 22:08:21 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/12 22:08:21 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 typedef struct s_list
 {
 	int				number;
+	int				index;
 	struct s_list	*next;
 }	t_list;
 

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/12 15:27:02 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/12 15:30:50 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/12 22:09:21 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/12 22:41:16 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,28 @@ void	sort_chunk(t_list **stack_a, t_list **stack_b, unsigned int	lstsize)
 	sort_three(stack_a);
 }
 
+void	sort_index(t_list **stack_a)
+{
+	t_list	*tmp1;
+	t_list	*tmp2;
+	int		count;
+
+	tmp1 = *stack_a;
+	while (tmp1 != NULL)
+	{
+		count = 0;
+		tmp2 = *stack_a;
+		while (tmp2 != NULL)
+		{
+			if (tmp2->number < tmp1->number)
+				count++;
+			tmp2 = tmp2->next;
+		}
+		tmp1->index = count;
+		tmp1 = tmp1->next;
+	}
+}
+
 void	sort_medium(t_list **stack_a, t_list **stack_b)
 {
 	int				num_chunks;
@@ -60,5 +82,5 @@ void	sort_medium(t_list **stack_a, t_list **stack_b)
 	lstsize = ft_lstsize(*stack_a);
 	num_chunks = sqrt(lstsize);
 	chunk_size = lstsize / num_chunks;
-	sort_chunk(stack_a, stack_b, lstsize);
+	sort_index(stack_a);
 }
