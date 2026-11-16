@@ -5,51 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/13 12:48:01 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/13 17:24:59 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/16 18:29:45 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/16 18:47:57 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
-
-void	sort_chunk(t_list **stack_a, t_list **stack_b, unsigned int	lstsize)
-{
-	int				smallest_number;
-	int				index;
-	int				min_index;
-	t_list			*tmp;
-
-	while (lstsize > 3)
-	{
-		smallest_number = (*stack_a)->number;
-		index = 0;
-		min_index = 0;
-		tmp = *stack_a;
-		while (tmp != NULL)
-		{
-			if (tmp->number < smallest_number)
-			{
-				smallest_number = tmp->number;
-				min_index = index;
-			}
-			index++;
-			tmp = tmp->next;
-		}
-		if (lstsize / 2 > min_index)
-		{
-			while ((*stack_a)->number != smallest_number)
-				ra(stack_a);
-		}
-		else
-		{
-			while ((*stack_a)->number != smallest_number)
-				rra(stack_a);
-		}
-		pb(stack_a, stack_b);
-		lstsize--;
-	}
-	sort_three(stack_a);
-}
 
 void	sort_index(t_list **stack_a)
 {
@@ -73,42 +34,88 @@ void	sort_index(t_list **stack_a)
 	}
 }
 
-void	sort_medium(t_list **stack_a, t_list **stack_b)
+static int	ft_sqrt(int nb)
 {
-	unsigned int	num_chunks;
-	unsigned int	chunk_size;
-	unsigned int	lstsize;
-	unsigned int	min_index;
-	unsigned int	max_index;
+	int	i;
 
+	if (nb <= 0)
+		return (0);
+	i = 1;
+	while (i * i <= nb)
+		i++;
+	return (i - 1);
+}
 
-	lstsize = ft_lstsize(*stack_a);
-	num_chunks = sqrt(lstsize);
-	chunk_size = lstsize / num_chunks;
-	sort_index(stack_a);
-	min_index = 0;
-	max_index = chunk_size;
+static int	get_pos(t_list *stack, int target_index)
+{
+	int	pos;
+
+	pos = 0;
+	while (stack != NULL)
+	{
+		if (stack->index == target_index)
+			return (pos);
+		pos++;
+		stack = stack->next;
+	}
+	return (pos);
+}
+
+static void	push_chunks_to_b(t_list **stack_a, t_list **stack_b, int range)
+{
+	int	i;
+
+	i = 0;
 	while (*stack_a != NULL)
 	{
-		if ((*stack_a)->index <= max_index)
+		if ((*stack_a)->index <= i)
 		{
 			pb(stack_a, stack_b);
-			min_index++;
+			rb(stack_b);
+			i++;
+		}
+		else if ((*stack_a)->index <= i + range)
+		{
+			pb(stack_a, stack_b);
+			i++;
 		}
 		else
 			ra(stack_a);
-		if (min_index == max_index)
-			max_index = max_index + chunk_size;
 	}
-	max_index = lstsize - 1;
-	while (*stack_b != NULL)
+}
+
+static void	push_back_to_a(t_list **stack_a, t_list **stack_b, int size)
+{
+	int	pos;
+
+	while (size > 0)
 	{
-		if ((*stack_b)->index == max_index)
+		pos = get_pos(*stack_b, size - 1);
+		if (pos <= size / 2)
 		{
-			pa(stack_a, stack_b);
-			max_index--;
+			while ((*stack_b)->index != size - 1)
+				rb(stack_b);
 		}
 		else
-			rb(stack_b);
+		{
+			while ((*stack_b)->index != size - 1)
+				rrb(stack_b);
+		}
+		pa(stack_a, stack_b);
+		size--;
 	}
+}
+
+void	sort_medium(t_list **stack_a, t_list **stack_b)
+{
+	int	size;
+	int	range;
+
+	size = ft_lstsize(*stack_a);
+	if (size <= 1)
+		return ;
+	sort_index(stack_a);
+	range = ft_sqrt(size) + (ft_sqrt(size) / 2);
+	push_chunks_to_b(stack_a, stack_b, range);
+	push_back_to_a(stack_a, stack_b, size);
 }
