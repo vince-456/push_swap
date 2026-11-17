@@ -5,24 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/12 14:22:16 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/12 14:22:16 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/17 14:54:36 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/17 14:57:39 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	rr(t_list **stack_a, t_list **stack_b)
+void	rra(t_stack **stack_a, t_bench *bench)
 {
-	ra(stack_a);
-	rb(stack_b);
-	write (1, "rr\n", 3);
-}
-
-void	rra(t_list **stack_a)
-{
-	t_list	*last;
-	t_list	*prev;
+	t_stack	*last;
+	t_stack	*prev;
 
 	if (!*stack_a || !(*stack_a)->next)
 		return ;
@@ -36,13 +29,17 @@ void	rra(t_list **stack_a)
 	prev->next = NULL;
 	last->next = *stack_a;
 	*stack_a = last;
-	write(1, "rra\n", 4);
+	if (bench)
+	{
+		ft_putstr_fd("rra\n", 1);
+		bench->rra++;
+	}
 }
 
-void	rrb(t_list **stack_b)
+void	rrb(t_stack **stack_b, t_bench *bench)
 {
-	t_list	*last;
-	t_list	*prev;
+	t_stack	*last;
+	t_stack	*prev;
 
 	if (!*stack_b || !(*stack_b)->next)
 		return ;
@@ -56,12 +53,23 @@ void	rrb(t_list **stack_b)
 	prev->next = NULL;
 	last->next = *stack_b;
 	*stack_b = last;
-	write (1, "rrb\n", 4);
+	if (bench)
+	{
+		ft_putstr_fd("rrb\n", 1);
+		bench->rrb++;
+	}
 }
 
-void	rrr(t_list **stack_a, t_list **stack_b)
+void	rrr(t_stack **stack_a, t_stack **stack_b, t_bench *bench)
 {
-	rra(stack_a);
-	rrb(stack_b);
-	write (1, "rrr\n", 4);
+	if (!stack_a || !*stack_a || !(*stack_a)->next
+		|| !stack_b || !*stack_b || !(*stack_b)->next)
+		return (0);
+	rra(stack_a, 0);
+	rrb(stack_b, 0);
+	if (bench)
+	{
+		ft_putstr_fd("rrr\n", 1);
+		bench->rrr++;
+	}
 }

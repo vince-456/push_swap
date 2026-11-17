@@ -5,17 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/12 13:49:59 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/12 13:50:04 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/17 14:52:26 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/17 14:54:03 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	ra(t_list **stack_a)
+void	ra(t_stack **stack_a, t_bench *bench)
 {
-	t_list	*first;
-	t_list	*last;
+	t_stack	*first;
+	t_stack	*last;
 
 	if (!*stack_a || !(*stack_a)->next)
 		return ;
@@ -26,13 +26,17 @@ void	ra(t_list **stack_a)
 		last = last->next;
 	last->next = first;
 	first->next = NULL;
-	write(1, "ra\n", 3);
+	if (bench)
+	{
+		ft_putstr_fd("ra\n", 1);
+		bench->ra++;
+	}
 }
 
-void	rb(t_list **stack_b)
+void	rb(t_stack **stack_b, t_bench *bench)
 {
-	t_list	*first;
-	t_list	*last;
+	t_stack	*first;
+	t_stack	*last;
 
 	if (!*stack_b || !(*stack_b)->next)
 		return ;
@@ -43,5 +47,23 @@ void	rb(t_list **stack_b)
 		last = last->next;
 	last->next = first;
 	first->next = NULL;
-	write (1, "rb\n", 3);
+	if (bench)
+	{
+		ft_putstr_fd("rb\n", 1);
+		bench->rb++;
+	}
+}
+
+void	rr(t_stack **stack_a, t_stack **stack_b, t_bench *bench)
+{
+	if (!stack_a || !*stack_a || !(*stack_a)->next
+		|| !stack_b || !*stack_b || !(*stack_b)->next)
+		return (0);
+	ra(stack_a, 0);
+	rb(stack_b, 0);
+	if (bench)
+	{
+		ft_putstr_fd("rr\n", 1);
+		bench->rr++;
+	}
 }

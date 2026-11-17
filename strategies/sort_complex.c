@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/17 12:04:57 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/17 12:04:57 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/17 14:28:27 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/17 14:28:27 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	get_max_bits(int lstsize)
 	return (max_bits);
 }
 
-void	radix_pass(t_list **stack_a, t_list **stack_b, int lstsize, int bit)
+void	radix_pass(t_stack **stack_a, t_stack **stack_b, int lstsize, int bit)
 {
 	int	i;
 
@@ -41,7 +41,7 @@ void	radix_pass(t_list **stack_a, t_list **stack_b, int lstsize, int bit)
 		pa(stack_a, stack_b);
 }
 
-void	sort_complex(t_list **stack_a, t_list **stack_b)
+void	sort_complex(t_stack **stack_a, t_stack **stack_b)
 {
 	int	lstsize;
 	int	max_bits;

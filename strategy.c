@@ -22,13 +22,13 @@ void	choose_strategy(void)
 
 }
 
-void	sort_simple(t_list **stack_a, t_list **stack_b)
+void	sort_simple(t_stack **stack_a, t_stack **stack_b)
 {
 	int				smallest_number;
 	int				index;
 	int				min_index;
 	unsigned int	lstsize;
-	t_list			*tmp;
+	t_stack			*tmp;
 
 	lstsize = ft_lstsize(stack_a);
 	while (*stack_a != NULL)

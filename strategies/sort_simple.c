@@ -12,7 +12,7 @@
 
 #include "../push_swap.h"
 
-void	sort_three(t_list **stack_a)
+void	sort_three(t_stack **stack_a)
 {
 	int	first;
 	int	second;
@@ -41,13 +41,13 @@ void	sort_three(t_list **stack_a)
 		rra(stack_a);
 }
 
-void	sort_simple(t_list **stack_a, t_list **stack_b)
+void	sort_simple(t_stack **stack_a, t_stack **stack_b)
 {
 	int				smallest_number;
 	int				index;
 	int				min_index;
 	unsigned int	lstsize;
-	t_list			*tmp;
+	t_stack			*tmp;
 
 	lstsize = ft_lstsize(*stack_a);
 	while (lstsize > 3)

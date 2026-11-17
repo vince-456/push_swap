@@ -5,17 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/17 12:05:09 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/17 12:33:42 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/17 12:40:09 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/17 12:40:09 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	set_stack_indexes(t_list **stack)
+void	set_stack_indexes(t_stack **stack)
 {
-	t_list	*tmp1;
-	t_list	*tmp2;
+	t_stack	*tmp1;
+	t_stack	*tmp2;
 	int		count;
 
 	tmp1 = *stack;
@@ -46,7 +46,7 @@ int	ft_sqrt(int nb)
 	return (i - 1);
 }
 
-int	get_pos(t_list *stack, int target_index)
+int	get_pos(t_stack *stack, int target_index)
 {
 	int	pos;
 
@@ -61,7 +61,7 @@ int	get_pos(t_list *stack, int target_index)
 	return (pos);
 }
 
-void	push_to_b(t_list **stack_a, t_list **stack_b, int chunk)
+void	push_to_b(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 {
 	int	i;
 
@@ -74,7 +74,7 @@ void	push_to_b(t_list **stack_a, t_list **stack_b, int chunk)
 			rb(stack_b);
 			i++;
 		}
-		else if ((*stack_a)->index <= i + chunk)
+		else if ((*stack_a)->index <= i + chunk_size)
 		{
 			pb(stack_a, stack_b);
 			i++;
@@ -84,7 +84,7 @@ void	push_to_b(t_list **stack_a, t_list **stack_b, int chunk)
 	}
 }
 
-void	push_to_a(t_list **stack_a, t_list **stack_b, int lstsize)
+void	push_to_a(t_stack **stack_a, t_stack **stack_b, int lstsize)
 {
 	int	pos;
 
@@ -106,16 +106,16 @@ void	push_to_a(t_list **stack_a, t_list **stack_b, int lstsize)
 	}
 }
 
-void	sort_medium(t_list **stack_a, t_list **stack_b)
+void	sort_medium(t_stack **stack_a, t_stack **stack_b)
 {
 	int	lstsize;
-	int	chunk;
+	int	chunk_size;
 
 	lstsize = ft_lstsize(*stack_a);
 	if (lstsize <= 1)
 		return ;
 	set_stack_indexes(stack_a);
-	chunk = ft_sqrt(lstsize) + (ft_sqrt(lstsize) / 2);
-	push_to_b(stack_a, stack_b, chunk);
+	chunk_size = ft_sqrt(lstsize) + (ft_sqrt(lstsize) / 2);
+	push_to_b(stack_a, stack_b, chunk_size);
 	push_to_a(stack_a, stack_b, lstsize);
 }

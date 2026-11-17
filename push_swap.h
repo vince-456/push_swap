@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/16 23:43:53 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/16 23:43:53 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/17 14:59:56 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/17 15:00:37 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,23 @@
 
 # include "libft/libft.h"
 
-typedef struct s_list
+typedef struct s_stack
 {
 	int				number;
 	int				index;
-	struct s_list	*next;
-}	t_list;
+	struct s_stack	*next;
+}	t_stack;
 
-void	sa(t_list **stack_a);
-void	sb(t_list **stack_b);
-void	ss(t_list **stack_a, t_list **stack_b);
-void	pa(t_list **stack_a, t_list **stack_b);
-void	pb(t_list **stack_a, t_list **stack_b);
-void	ra(t_list **stack_a);
-void	rb(t_list **stack_b);
-void	rr(t_list **stack_a, t_list **stack_b);
-void	rra(t_list **stack_a);
-void	rrb(t_list **stack_b);
-void	rrr(t_list **stack_a, t_list **stack_b);
+void	sa(t_stack **stack_a, t_bench *bench);
+void	sb(t_stack **stack_b, t_bench *bench);
+void	ss(t_stack **stack_a, t_stack **stack_b, t_bench *bench);
+void	pa(t_stack **stack_a, t_stack **stack_b, t_bench *bench);
+void	pb(t_stack **stack_a, t_stack **stack_b, t_bench *bench);
+void	ra(t_stack **stack_a, t_bench *bench);
+void	rb(t_stack **stack_b, t_bench *bench);
+void	rr(t_stack **stack_a, t_stack **stack_b, t_bench *bench);
+void	rra(t_stack **stack_a, t_bench *bench);
+void	rrb(t_stack **stack_b, t_bench *bench);
+void	rrr(t_stack **stack_a, t_stack **stack_b, t_bench *bench);
 
 #endif

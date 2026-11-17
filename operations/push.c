@@ -5,16 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/12 14:25:05 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/12 14:25:05 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/17 14:29:21 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/17 14:44:56 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	pa(t_list **stack_a, t_list **stack_b)
+void	pa(t_stack **stack_a, t_stack **stack_b, t_bench *bench)
 {
-	t_list	*tmp;
+	t_stack	*tmp;
 
 	if (!stack_b || !*stack_b)
 		return ;
@@ -22,12 +22,16 @@ void	pa(t_list **stack_a, t_list **stack_b)
 	*stack_b = (*stack_b)->next;
 	tmp->next = *stack_a;
 	*stack_a = tmp;
-	write (1, "pa\n", 3);
+	if (bench)
+	{
+		ft_putstr_fd("pa\n", 1);
+		bench->pa++;
+	}
 }
 
-void	pb(t_list **stack_a, t_list **stack_b)
+void	pb(t_stack **stack_a, t_stack **stack_b, t_bench *bench)
 {
-	t_list	*tmp;
+	t_stack	*tmp;
 
 	if (!stack_a || !*stack_a)
 		return ;
@@ -35,5 +39,9 @@ void	pb(t_list **stack_a, t_list **stack_b)
 	*stack_a = (*stack_a)->next;
 	tmp->next = *stack_b;
 	*stack_b = tmp;
-	write (1, "pb\n", 3);
+	if (bench)
+	{
+		ft_putstr_fd("pb\n", 1);
+		bench->pb++;
+	}
 }
