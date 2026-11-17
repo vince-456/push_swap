@@ -5,14 +5,38 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/12 15:26:52 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/12 15:26:52 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/17 15:53:57 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/17 15:54:37 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	sort_three(t_stack **stack_a)
+static int	get_min_index(t_stack *stack)
+{
+	t_stack	*tmp;
+	int		min;
+	int		min_idx;
+	int		i;
+
+	tmp = stack;
+	min = tmp->number;
+	min_idx = 0;
+	i = 0;
+	while (tmp)
+	{
+		if (tmp->number < min)
+		{
+			min = tmp->number;
+			min_idx = i;
+		}
+		i++;
+		tmp = tmp->next;
+	}
+	return (min_idx);
+}
+
+void	sort_three(t_stack **stack_a, t_bench *bench)
 {
 	int	first;
 	int	second;
@@ -24,62 +48,46 @@ void	sort_three(t_stack **stack_a)
 	second = (*stack_a)->next->number;
 	third = (*stack_a)->next->next->number;
 	if (first > second && second < third && first < third)
-		sa(stack_a);
+		sa(stack_a, bench);
 	else if (first > second && second > third)
 	{
-		sa(stack_a);
-		rra(stack_a);
+		sa(stack_a, bench);
+		rra(stack_a, bench);
 	}
 	else if (first > second && second < third && first > third)
-		ra(stack_a);
+		ra(stack_a, bench);
 	else if (first < second && second > third && first < third)
 	{
-		sa(stack_a);
-		ra(stack_a);
+		sa(stack_a, bench);
+		ra(stack_a, bench);
 	}
 	else if (first < second && second > third && first > third)
-		rra(stack_a);
+		rra(stack_a, bench);
 }
 
-void	sort_simple(t_stack **stack_a, t_stack **stack_b)
+void	sort_simple(t_stack **stack_a, t_stack **stack_b, t_bench *bench)
 {
-	int				smallest_number;
-	int				index;
-	int				min_index;
-	unsigned int	lstsize;
-	t_stack			*tmp;
+	int	min_idx;
+	int	size;
 
-	lstsize = ft_lstsize(*stack_a);
-	while (lstsize > 3)
+	size = ft_lstsize(*stack_a);
+	while (size > 3)
 	{
-		smallest_number = (*stack_a)->number;
-		index = 0;
-		min_index = 0;
-		tmp = *stack_a;
-		while (tmp != NULL)
+		min_idx = get_min_index(*stack_a);
+		if (min_idx <= size / 2)
 		{
-			if (tmp->number < smallest_number)
-			{
-				smallest_number = tmp->number;
-				min_index = index;
-			}
-			index++;
-			tmp = tmp->next;
-		}
-		if (lstsize / 2 > min_index)
-		{
-			while ((*stack_a)->number != smallest_number)
-				ra(stack_a);
+			while (min_idx-- > 0)
+				ra(stack_a, bench);
 		}
 		else
 		{
-			while ((*stack_a)->number != smallest_number)
-				rra(stack_a);
+			while (min_idx++ < size)
+				rra(stack_a, bench);
 		}
-		pb(stack_a, stack_b);
-		lstsize--;
+		pb(stack_a, stack_b, bench);
+		size = ft_lstsize(*stack_a);
 	}
-	sort_three(stack_a);
+	sort_three(stack_a, bench);
 	while (*stack_b != NULL)
-		pa(stack_a, stack_b);
+		pa(stack_a, stack_b, bench);
 }

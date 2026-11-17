@@ -5,63 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/17 12:40:09 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/17 12:40:09 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/17 15:57:56 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/17 15:57:56 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	set_stack_indexes(t_stack **stack)
-{
-	t_stack	*tmp1;
-	t_stack	*tmp2;
-	int		count;
-
-	tmp1 = *stack;
-	while (tmp1 != NULL)
-	{
-		count = 0;
-		tmp2 = *stack;
-		while (tmp2 != NULL)
-		{
-			if (tmp2->number < tmp1->number)
-				count++;
-			tmp2 = tmp2->next;
-		}
-		tmp1->index = count;
-		tmp1 = tmp1->next;
-	}
-}
-
-int	ft_sqrt(int nb)
-{
-	int	i;
-
-	if (nb <= 0)
-		return (0);
-	i = 1;
-	while (i * i <= nb)
-		i++;
-	return (i - 1);
-}
-
-int	get_pos(t_stack *stack, int target_index)
-{
-	int	pos;
-
-	pos = 0;
-	while (stack != NULL)
-	{
-		if (stack->index == target_index)
-			return (pos);
-		pos++;
-		stack = stack->next;
-	}
-	return (pos);
-}
-
-void	push_to_b(t_stack **stack_a, t_stack **stack_b, int chunk_size)
+void	push_to_b(t_stack **stack_a, t_stack **stack_b, int chunk_size,
+	t_bench *bench)
 {
 	int	i;
 
@@ -70,21 +22,22 @@ void	push_to_b(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 	{
 		if ((*stack_a)->index <= i)
 		{
-			pb(stack_a, stack_b);
-			rb(stack_b);
+			pb(stack_a, stack_b, bench);
+			rb(stack_b, bench);
 			i++;
 		}
 		else if ((*stack_a)->index <= i + chunk_size)
 		{
-			pb(stack_a, stack_b);
+			pb(stack_a, stack_b, bench);
 			i++;
 		}
 		else
-			ra(stack_a);
+			ra(stack_a, bench);
 	}
 }
 
-void	push_to_a(t_stack **stack_a, t_stack **stack_b, int lstsize)
+void	push_to_a(t_stack **stack_a, t_stack **stack_b, int lstsize,
+	t_bench *bench)
 {
 	int	pos;
 
@@ -94,19 +47,19 @@ void	push_to_a(t_stack **stack_a, t_stack **stack_b, int lstsize)
 		if (pos <= lstsize / 2)
 		{
 			while ((*stack_b)->index != lstsize - 1)
-				rb(stack_b);
+				rb(stack_b, bench);
 		}
 		else
 		{
 			while ((*stack_b)->index != lstsize - 1)
-				rrb(stack_b);
+				rrb(stack_b, bench);
 		}
-		pa(stack_a, stack_b);
+		pa(stack_a, stack_b, bench);
 		lstsize--;
 	}
 }
 
-void	sort_medium(t_stack **stack_a, t_stack **stack_b)
+void	sort_medium(t_stack **stack_a, t_stack **stack_b, t_bench *bench)
 {
 	int	lstsize;
 	int	chunk_size;
@@ -116,6 +69,6 @@ void	sort_medium(t_stack **stack_a, t_stack **stack_b)
 		return ;
 	set_stack_indexes(stack_a);
 	chunk_size = ft_sqrt(lstsize) + (ft_sqrt(lstsize) / 2);
-	push_to_b(stack_a, stack_b, chunk_size);
-	push_to_a(stack_a, stack_b, lstsize);
+	push_to_b(stack_a, stack_b, chunk_size, bench);
+	push_to_a(stack_a, stack_b, lstsize, bench);
 }

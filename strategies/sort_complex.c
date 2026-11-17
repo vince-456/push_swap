@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkoch <vkoch@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/17 14:28:27 by vkoch             #+#    #+#             */
-/*   Updated: 2026/11/17 14:28:27 by vkoch            ###   ########.ch       */
+/*   Created: 2026/11/17 15:58:52 by vkoch             #+#    #+#             */
+/*   Updated: 2026/11/17 16:04:07 by vkoch            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	get_max_bits(int lstsize)
 	return (max_bits);
 }
 
-void	radix_pass(t_stack **stack_a, t_stack **stack_b, int lstsize, int bit)
+void	radix_pass(t_stack **stack_a, t_stack **stack_b, int lstsize, int bit,
+	t_bench *bench)
 {
 	int	i;
 
@@ -32,16 +33,16 @@ void	radix_pass(t_stack **stack_a, t_stack **stack_b, int lstsize, int bit)
 	while (i < lstsize)
 	{
 		if ((((*stack_a)->index >> bit) & 1) == 0)
-			pb(stack_a, stack_b);
+			pb(stack_a, stack_b, bench);
 		else
-			ra(stack_a);
+			ra(stack_a, bench);
 		i++;
 	}
 	while (*stack_b != NULL)
-		pa(stack_a, stack_b);
+		pa(stack_a, stack_b, bench);
 }
 
-void	sort_complex(t_stack **stack_a, t_stack **stack_b)
+void	sort_complex(t_stack **stack_a, t_stack **stack_b, t_bench *bench)
 {
 	int	lstsize;
 	int	max_bits;
@@ -55,7 +56,7 @@ void	sort_complex(t_stack **stack_a, t_stack **stack_b)
 	i = 0;
 	while (i < max_bits)
 	{
-		radix_pass(stack_a, stack_b, lstsize, i);
+		radix_pass(stack_a, stack_b, lstsize, i, bench);
 		i++;
 	}
 }
